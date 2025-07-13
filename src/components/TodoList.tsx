@@ -8,7 +8,7 @@ export type TodoListProps = {
   todos: Todo[];
   onRemove: (idx: number) => void;
   onMove: (from: number, to: number) => void;
-  onEdit: (idx: number, value: string) => void;
+  onEdit: (idx: number, value: string, due?: string) => void;
 };
 
 export default function TodoList({
@@ -19,6 +19,7 @@ export default function TodoList({
 }: TodoListProps) {
   const [editingIdx, setEditingIdx] = useState<number | null>(null);
   const [editValue, setEditValue] = useState("");
+  const [editDue, setEditDue] = useState<Date | null>(null);
 
   const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return;
@@ -30,6 +31,7 @@ export default function TodoList({
   const handleEditStart = (idx: number) => {
     setEditingIdx(idx);
     setEditValue(todos[idx].text);
+    setEditDue(todos[idx].due ? new Date(todos[idx].due) : null);
   };
   // 編集内容変更
   const handleEditChange = (value: string) => {
@@ -38,13 +40,17 @@ export default function TodoList({
   // 編集保存
   const handleEditSave = () => {
     if (editingIdx !== null) {
-      onEdit(editingIdx, editValue);
+      // 期日も渡す
+      const dueStr = editDue ? editDue.toISOString().slice(0, 10) : undefined;
+      onEdit(editingIdx, editValue, dueStr);
       setEditingIdx(null);
+      setEditDue(null);
     }
   };
   // 編集キャンセル
   const handleEditCancel = () => {
     setEditingIdx(null);
+    setEditDue(null);
   };
 
   return (
@@ -60,8 +66,10 @@ export default function TodoList({
                     idx={idx}
                     editing={editingIdx === idx}
                     editValue={editValue}
+                    editDue={editDue}
                     onEditStart={handleEditStart}
                     onEditChange={handleEditChange}
+                    onEditDueChange={setEditDue}
                     onEditSave={handleEditSave}
                     onEditCancel={handleEditCancel}
                     onRemove={onRemove}

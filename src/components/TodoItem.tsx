@@ -3,14 +3,18 @@ import { MdDelete, MdDragIndicator, MdEdit } from "react-icons/md";
 import type { DraggableProvided } from "@hello-pangea/dnd";
 import type { Todo } from "../hooks/useTodos";
 import React from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export type TodoItemProps = {
   todo: Todo;
   idx: number;
   editing: boolean;
   editValue: string;
+  editDue: Date | null;
   onEditStart: (idx: number) => void;
   onEditChange: (value: string) => void;
+  onEditDueChange: (date: Date | null) => void;
   onEditSave: () => void;
   onEditCancel: () => void;
   onRemove: (idx: number) => void;
@@ -23,8 +27,10 @@ const TodoItem: React.FC<TodoItemProps> = ({
   idx,
   editing,
   editValue,
+  editDue,
   onEditStart,
   onEditChange,
+  onEditDueChange,
   onEditSave,
   onEditCancel,
   onRemove,
@@ -57,6 +63,27 @@ const TodoItem: React.FC<TodoItemProps> = ({
             mr={2}
             fontSize="md"
             placeholder="内容を入力"
+          />
+          {/* 期日編集用DatePicker（stateはeditDue、変更はonEditDueChangeで管理） */}
+          <DatePicker
+            selected={editDue}
+            onChange={onEditDueChange}
+            dateFormat="yyyy-MM-dd"
+            placeholderText="期日"
+            customInput={
+              <Button
+                size="sm"
+                variant="outline"
+                minW={12}
+                colorScheme="teal"
+                ml={2}
+              >
+                期日
+              </Button>
+            }
+            popperPlacement="bottom"
+            minDate={new Date()}
+            isClearable
           />
           <Button size="sm" colorScheme="teal" mr={1} onClick={onEditSave}>
             保存
