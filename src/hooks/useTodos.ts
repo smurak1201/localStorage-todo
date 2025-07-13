@@ -29,5 +29,9 @@ export function useTodos() {
     });
   };
 
-  return { todos, addTodo, removeTodo, moveTodo };
+  const editTodo = (idx: number, value: string) => {
+    setTodos((prev) => prev.map((todo, i) => (i === idx ? value : todo)));
+  };
+
+  return { todos, addTodo, removeTodo, moveTodo, editTodo };
 }
