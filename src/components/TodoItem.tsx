@@ -1,23 +1,30 @@
+// Chakra UIのレイアウト・UI部品をインポート
 import { HStack, Text, IconButton, Input, Button } from "@chakra-ui/react";
+// アイコン用ライブラリ
 import { MdDelete, MdDragIndicator, MdEdit } from "react-icons/md";
+// ドラッグ＆ドロップ用型定義
 import type { DraggableProvided } from "@hello-pangea/dnd";
+// Todo型定義
 import type { Todo } from "../types/todo";
+// Reactの型定義をインポート
 import React from "react";
 
+// TodoItemコンポーネントのprops型
 export type TodoItemProps = {
-  todo: Todo;
-  idx: number;
-  editing: boolean;
-  editValue: string;
-  onEditStart: (idx: number) => void;
-  onEditChange: (value: string) => void;
-  onEditSave: () => void;
-  onEditCancel: () => void;
-  onRemove: (idx: number) => void;
-  dragProvided: DraggableProvided;
-  dragHandleProps: React.HTMLAttributes<HTMLSpanElement>;
+  todo: Todo; // 表示するTodo
+  idx: number; // Todoの並び順
+  editing: boolean; // 編集中かどうか
+  editValue: string; // 編集中のテキスト
+  onEditStart: (idx: number) => void; // 編集開始
+  onEditChange: (value: string) => void; // 編集テキスト変更
+  onEditSave: () => void; // 編集確定
+  onEditCancel: () => void; // 編集キャンセル
+  onRemove: (idx: number) => void; // Todo削除
+  dragProvided: DraggableProvided; // ドラッグ操作用
+  dragHandleProps: React.HTMLAttributes<HTMLSpanElement>; // ドラッグハンドル用
 };
 
+// 個々のTodoを表示・操作するコンポーネント
 const TodoItem: React.FC<TodoItemProps> = ({
   todo,
   idx,
@@ -31,7 +38,6 @@ const TodoItem: React.FC<TodoItemProps> = ({
   dragProvided,
   dragHandleProps,
 }) => {
-  // 個々のTodoを表示・操作するコンポーネント
   return (
     // HStackで横並びレイアウト
     <HStack
@@ -42,6 +48,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
       ref={dragProvided.innerRef}
       {...dragProvided.draggableProps}
     >
+      {/* ドラッグハンドル（並び替え用） */}
       <span {...dragHandleProps}>
         <MdDragIndicator
           style={{ cursor: "grab", marginRight: 8, fontSize: 22 }}
@@ -50,6 +57,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
       {editing ? (
         // 編集モード時の表示
         <>
+          {/* 編集用入力欄 */}
           <Input
             value={editValue}
             onChange={(e) => onEditChange(e.target.value)}
@@ -59,9 +67,11 @@ const TodoItem: React.FC<TodoItemProps> = ({
             fontSize="md"
             placeholder="内容を入力"
           />
+          {/* 保存ボタン */}
           <Button size="sm" colorScheme="teal" mr={1} onClick={onEditSave}>
             保存
           </Button>
+          {/* キャンセルボタン */}
           <Button size="sm" variant="ghost" onClick={onEditCancel}>
             キャンセル
           </Button>
@@ -69,7 +79,9 @@ const TodoItem: React.FC<TodoItemProps> = ({
       ) : (
         // 通常表示モード
         <>
+          {/* Todo内容表示 */}
           <Text flex={1}>{todo.text}</Text>
+          {/* 編集ボタン */}
           <IconButton
             aria-label="編集"
             colorScheme="teal"
@@ -80,6 +92,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
           >
             <MdEdit />
           </IconButton>
+          {/* 削除ボタン */}
           <IconButton
             aria-label="削除"
             colorScheme="teal"
