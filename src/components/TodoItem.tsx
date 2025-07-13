@@ -73,7 +73,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
               <span
                 style={{ color: "#3182ce", fontSize: "0.9em", marginLeft: 8 }}
               >
-                （期日: {todo.due}）
+                {todo.due}
               </span>
             )}
           </Text>

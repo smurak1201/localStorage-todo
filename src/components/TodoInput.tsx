@@ -1,4 +1,4 @@
-import { HStack, Input, Button, Box } from "@chakra-ui/react";
+import { HStack, Input, Button, Box, IconButton } from "@chakra-ui/react";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -58,7 +58,6 @@ export default function TodoInput({ onAdd }: TodoInputProps) {
             </Button>
           }
           popperPlacement="bottom"
-          isClearable
           minDate={new Date()}
         />
         {due && (
@@ -71,13 +70,27 @@ export default function TodoInput({ onAdd }: TodoInputProps) {
             borderRadius="md"
             fontWeight="bold"
             height="40px"
-            minW="110px"
+            minW="120px"
             display="flex"
             alignItems="center"
-            justifyContent="center"
+            justifyContent="space-between"
             whiteSpace="nowrap"
+            gap={2}
           >
-            期日: {due.toISOString().slice(0, 10)}
+            <span>
+              {due.getFullYear()}年{String(due.getMonth() + 1).padStart(2, "0")}
+              月{String(due.getDate()).padStart(2, "0")}日
+            </span>
+            <IconButton
+              aria-label="期日をクリア"
+              size="xs"
+              variant="ghost"
+              colorScheme="teal"
+              ml={1}
+              onClick={() => setDue(null)}
+            >
+              ×
+            </IconButton>
           </Box>
         )}
       </HStack>
