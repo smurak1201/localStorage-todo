@@ -1,6 +1,7 @@
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import type { DropResult } from "@hello-pangea/dnd";
 import { useState } from "react";
+import { useEditTodo } from "../hooks/useEditTodo";
 import TodoItem from "./TodoItem";
 import type { Todo } from "../hooks/useTodos";
 
@@ -17,8 +18,8 @@ export default function TodoList({
   onMove,
   onEdit,
 }: TodoListProps) {
-  const [editingIdx, setEditingIdx] = useState<number | null>(null);
-  const [editValue, setEditValue] = useState("");
+  const { editingIdx, editValue, startEdit, changeEdit, cancelEdit, saveEdit } =
+    useEditTodo();
 
   const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return;
@@ -27,25 +28,13 @@ export default function TodoList({
   };
 
   // 編集開始
-  const handleEditStart = (idx: number) => {
-    setEditingIdx(idx);
-    setEditValue(todos[idx].text);
-  };
+  const handleEditStart = (idx: number) => startEdit(idx, todos[idx].text);
   // 編集内容変更
-  const handleEditChange = (value: string) => {
-    setEditValue(value);
-  };
+  const handleEditChange = (value: string) => changeEdit(value);
   // 編集保存
-  const handleEditSave = () => {
-    if (editingIdx !== null) {
-      onEdit(editingIdx, editValue);
-      setEditingIdx(null);
-    }
-  };
+  const handleEditSave = () => saveEdit(onEdit);
   // 編集キャンセル
-  const handleEditCancel = () => {
-    setEditingIdx(null);
-  };
+  const handleEditCancel = () => cancelEdit();
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
