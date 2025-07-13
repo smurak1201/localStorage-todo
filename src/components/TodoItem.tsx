@@ -69,13 +69,32 @@ const TodoItem: React.FC<TodoItemProps> = ({
         <>
           <Text flex={1}>
             {todo.text}
-            {todo.due && (
-              <span
-                style={{ color: "#3182ce", fontSize: "0.9em", marginLeft: 8 }}
-              >
-                {todo.due}
-              </span>
-            )}
+            {todo.due &&
+              (() => {
+                const today = new Date();
+                const dueDate = new Date(todo.due);
+                // 日付部分のみ比較
+                today.setHours(0, 0, 0, 0);
+                dueDate.setHours(0, 0, 0, 0);
+                const diff = Math.ceil(
+                  (dueDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+                );
+                let label = "";
+                if (diff > 0) label = `あと${diff}日`;
+                else if (diff === 0) label = "今日まで";
+                else label = "期限切れ";
+                return (
+                  <span
+                    style={{
+                      color: "#3182ce",
+                      fontSize: "0.9em",
+                      marginLeft: 8,
+                    }}
+                  >
+                    {label}
+                  </span>
+                );
+              })()}
           </Text>
           <IconButton
             aria-label="編集"
