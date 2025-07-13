@@ -68,7 +68,17 @@ const TodoItem: React.FC<TodoItemProps> = ({
             placeholder="内容を入力"
           />
           {/* 保存ボタン */}
-          <Button size="sm" colorScheme="teal" mr={1} onClick={onEditSave}>
+          <Button
+            size="sm"
+            colorScheme="teal"
+            mr={1}
+            onClick={() => {
+              if (editValue.trim() !== "") {
+                onEditSave();
+              }
+            }}
+            disabled={editValue.trim() === ""}
+          >
             保存
           </Button>
           {/* キャンセルボタン */}
