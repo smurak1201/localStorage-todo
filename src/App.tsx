@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import {
+  Box,
   Input,
   Button,
   VStack,
@@ -40,7 +41,16 @@ function App() {
   };
 
   return (
-    <div style={{ maxWidth: "28rem", margin: "40px auto 0", padding: "24px" }}>
+    <Box
+      maxW="md"
+      mx="auto"
+      mt={10}
+      p={6}
+      bg="white"
+      borderRadius="lg"
+      boxShadow="none"
+      border="none"
+    >
       <Text fontSize="2xl" fontWeight="bold" color="teal.500" mb={4}>
         Todoリスト
       </Text>
@@ -76,7 +86,7 @@ function App() {
           </HStack>
         ))}
       </VStack>
-    </div>
+    </Box>
   );
 }
 
