@@ -41,6 +41,11 @@ export default function TodoInput({ onAdd }: TodoInputProps) {
         isClearable
         minDate={new Date()}
       />
+      {due && (
+        <span style={{ color: "#3182ce", fontSize: "0.95em", marginLeft: 4 }}>
+          選択中: {due.toISOString().slice(0, 10)}
+        </span>
+      )}
       <Button colorScheme="teal" onClick={handleAdd}>
         追加
       </Button>
