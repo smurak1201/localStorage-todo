@@ -1,10 +1,11 @@
 import { HStack, Text, IconButton, Input, Button } from "@chakra-ui/react";
 import { MdDelete, MdDragIndicator, MdEdit } from "react-icons/md";
 import type { DraggableProvided } from "@hello-pangea/dnd";
+import type { Todo } from "../hooks/useTodos";
 import React from "react";
 
 export type TodoItemProps = {
-  todo: string;
+  todo: Todo;
   idx: number;
   editing: boolean;
   editValue: string;
@@ -66,7 +67,16 @@ const TodoItem: React.FC<TodoItemProps> = ({
         </>
       ) : (
         <>
-          <Text flex={1}>{todo}</Text>
+          <Text flex={1}>
+            {todo.text}
+            {todo.due && (
+              <span
+                style={{ color: "#3182ce", fontSize: "0.9em", marginLeft: 8 }}
+              >
+                （期日: {todo.due}）
+              </span>
+            )}
+          </Text>
           <IconButton
             aria-label="編集"
             colorScheme="teal"

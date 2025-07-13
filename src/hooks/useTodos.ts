@@ -1,9 +1,15 @@
 import { useState, useEffect } from "react";
 
+
+export type Todo = {
+  text: string;
+  due?: string;
+};
+
 const LOCAL_STORAGE_KEY = "todos";
 
 export function useTodos() {
-  const [todos, setTodos] = useState<string[]>(() => {
+  const [todos, setTodos] = useState<Todo[]>(() => {
     const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
     return stored ? JSON.parse(stored) : [];
   });
@@ -12,8 +18,8 @@ export function useTodos() {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos));
   }, [todos]);
 
-  const addTodo = (todo: string) => {
-    setTodos([...todos, todo]);
+  const addTodo = (text: string, due?: string) => {
+    setTodos([...todos, { text, due }]);
   };
 
   const removeTodo = (idx: number) => {
@@ -30,7 +36,7 @@ export function useTodos() {
   };
 
   const editTodo = (idx: number, value: string) => {
-    setTodos((prev) => prev.map((todo, i) => (i === idx ? value : todo)));
+    setTodos((prev) => prev.map((todo, i) => (i === idx ? { ...todo, text: value } : todo)));
   };
 
   return { todos, addTodo, removeTodo, moveTodo, editTodo };

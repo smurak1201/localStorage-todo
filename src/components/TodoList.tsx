@@ -2,9 +2,10 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import type { DropResult } from "@hello-pangea/dnd";
 import { useState } from "react";
 import TodoItem from "./TodoItem";
+import type { Todo } from "../hooks/useTodos";
 
 export type TodoListProps = {
-  todos: string[];
+  todos: Todo[];
   onRemove: (idx: number) => void;
   onMove: (from: number, to: number) => void;
   onEdit: (idx: number, value: string) => void;
@@ -28,7 +29,7 @@ export default function TodoList({
   // 編集開始
   const handleEditStart = (idx: number) => {
     setEditingIdx(idx);
-    setEditValue(todos[idx]);
+    setEditValue(todos[idx].text);
   };
   // 編集内容変更
   const handleEditChange = (value: string) => {
