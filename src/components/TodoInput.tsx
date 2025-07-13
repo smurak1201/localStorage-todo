@@ -58,9 +58,13 @@ export default function TodoInput({ onAdd }: TodoInputProps) {
           py={1}
           borderRadius="md"
           fontWeight="bold"
-          height="32px"
+          height="40px"
+          minW="110px"
           display="flex"
           alignItems="center"
+          justifyContent="center"
+          ml={1}
+          whiteSpace="nowrap"
         >
           期日: {due.toISOString().slice(0, 10)}
         </Box>
