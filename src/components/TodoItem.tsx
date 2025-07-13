@@ -1,5 +1,5 @@
 import { HStack, Text, IconButton, Input, Button } from "@chakra-ui/react";
-import { MdDelete, MdDragIndicator } from "react-icons/md";
+import { MdDelete, MdDragIndicator, MdEdit } from "react-icons/md";
 import type { DraggableProvided } from "@hello-pangea/dnd";
 import React from "react";
 
@@ -71,7 +71,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
             onClick={() => onEditStart(idx)}
             mr={1}
           >
-            <span style={{ fontWeight: "bold" }}>✏️</span>
+            <MdEdit />
           </IconButton>
           <IconButton
             aria-label="削除"
