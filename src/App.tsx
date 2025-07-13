@@ -4,7 +4,7 @@ import TodoInput from "./components/TodoInput";
 import { useTodos } from "./hooks/useTodos";
 
 function App() {
-  const { todos, addTodo, removeTodo } = useTodos();
+  const { todos, addTodo, removeTodo, moveTodo } = useTodos();
 
   return (
     <Box
@@ -21,7 +21,7 @@ function App() {
         Todoリスト
       </Text>
       <TodoInput onAdd={addTodo} />
-      <TodoList todos={todos} onRemove={removeTodo} />
+      <TodoList todos={todos} onRemove={removeTodo} onMove={moveTodo} />
     </Box>
   );
 }

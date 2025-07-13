@@ -20,5 +20,14 @@ export function useTodos() {
     setTodos(todos.filter((_, i) => i !== idx));
   };
 
-  return { todos, addTodo, removeTodo };
+  const moveTodo = (from: number, to: number) => {
+    setTodos((prev) => {
+      const updated = [...prev];
+      const [removed] = updated.splice(from, 1);
+      updated.splice(to, 0, removed);
+      return updated;
+    });
+  };
+
+  return { todos, addTodo, removeTodo, moveTodo };
 }

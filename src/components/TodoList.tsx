@@ -1,33 +1,62 @@
 import { VStack, HStack, Text, IconButton } from "@chakra-ui/react";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdDragHandle } from "react-icons/md";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import type { DropResult } from "@hello-pangea/dnd";
 
 export type TodoListProps = {
   todos: string[];
   onRemove: (idx: number) => void;
+  onMove: (from: number, to: number) => void;
 };
 
-export default function TodoList({ todos, onRemove }: TodoListProps) {
+export default function TodoList({ todos, onRemove, onMove }: TodoListProps) {
+  const handleDragEnd = (result: DropResult) => {
+    if (!result.destination) return;
+    if (result.source.index === result.destination.index) return;
+    onMove(result.source.index, result.destination.index);
+  };
+
   return (
-    <VStack gap={3} align="stretch">
-      {todos.map((todo, idx) => (
-        <HStack
-          key={idx}
-          justify="space-between"
-          bg="teal.50"
-          p={2}
-          borderRadius="md"
-        >
-          <Text>{todo}</Text>
-          <IconButton
-            aria-label="削除"
-            colorScheme="teal"
-            variant="ghost"
-            onClick={() => onRemove(idx)}
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <Droppable droppableId="todo-list">
+        {(provided) => (
+          <VStack
+            gap={3}
+            align="stretch"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
           >
-            <MdDelete />
-          </IconButton>
-        </HStack>
-      ))}
-    </VStack>
+            {todos.map((todo, idx) => (
+              <Draggable key={idx} draggableId={String(idx)} index={idx}>
+                {(dragProvided) => (
+                  <HStack
+                    justify="space-between"
+                    bg="teal.50"
+                    p={2}
+                    borderRadius="md"
+                    ref={dragProvided.innerRef}
+                    {...dragProvided.draggableProps}
+                  >
+                    <span {...dragProvided.dragHandleProps}>
+                      <MdDragHandle style={{ cursor: "grab" }} />
+                    </span>
+                    <Text flex={1}>{todo}</Text>
+                    <IconButton
+                      aria-label="削除"
+                      colorScheme="teal"
+                      variant="ghost"
+                      onClick={() => onRemove(idx)}
+                    >
+                      <MdDelete />
+                    </IconButton>
+                  </HStack>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </VStack>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 }
