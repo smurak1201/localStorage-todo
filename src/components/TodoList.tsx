@@ -1,4 +1,4 @@
-import { VStack, HStack, Text, IconButton } from "@chakra-ui/react";
+import { HStack, Text, IconButton } from "@chakra-ui/react";
 import { MdDelete, MdDragHandle } from "react-icons/md";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import type { DropResult } from "@hello-pangea/dnd";
@@ -20,14 +20,9 @@ export default function TodoList({ todos, onRemove, onMove }: TodoListProps) {
     <DragDropContext onDragEnd={handleDragEnd}>
       <Droppable droppableId="todo-list">
         {(provided) => (
-          <VStack
-            gap={3}
-            align="stretch"
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-          >
+          <div ref={provided.innerRef} {...provided.droppableProps}>
             {todos.map((todo, idx) => (
-              <Draggable key={idx} draggableId={String(idx)} index={idx}>
+              <Draggable key={idx} draggableId={`todo-${idx}`} index={idx}>
                 {(dragProvided) => (
                   <HStack
                     justify="space-between"
@@ -38,7 +33,9 @@ export default function TodoList({ todos, onRemove, onMove }: TodoListProps) {
                     {...dragProvided.draggableProps}
                   >
                     <span {...dragProvided.dragHandleProps}>
-                      <MdDragHandle style={{ cursor: "grab" }} />
+                      <MdDragHandle
+                        style={{ cursor: "grab", marginRight: 8 }}
+                      />
                     </span>
                     <Text flex={1}>{todo}</Text>
                     <IconButton
@@ -54,7 +51,7 @@ export default function TodoList({ todos, onRemove, onMove }: TodoListProps) {
               </Draggable>
             ))}
             {provided.placeholder}
-          </VStack>
+          </div>
         )}
       </Droppable>
     </DragDropContext>
