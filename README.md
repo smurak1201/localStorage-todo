@@ -1,69 +1,40 @@
-# React + TypeScript + Vite
+# localstrage-todo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 概要
 
-Currently, two official plugins are available:
+シンプルな Todo リストアプリです。React + TypeScript + Vite をベースに、Chakra UI でスタイリング、localStorage でデータ永続化を行っています。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 主な技術・構成
 
-## Expanding the ESLint configuration
+- 言語: TypeScript, JavaScript
+- フレームワーク: React
+- ビルドツール: Vite
+- UI ライブラリ: Chakra UI
+- 状態管理: React Hooks（useState, useEffect, カスタムフック）
+- ドラッグ＆ドロップ: @hello-pangea/dnd
+- データ永続化: localStorage
+- 型定義: TypeScript
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ディレクトリ構成
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- `src/` ... アプリ本体
+  - `components/` ... UI コンポーネント
+  - `hooks/` ... カスタムフック
+  - `types/` ... 型定義
+  - `assets/` ... 画像等
+- `public/` ... 公開用ファイル
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## セットアップ・起動方法
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. リポジトリをクローン
+2. `npm install` で依存パッケージをインストール
+3. `npm run dev` で開発サーバー起動
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## このリポジトリについて
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- GitHub Copilot を活用して設計・実装しています
+- Copilot の学習データは 2024 年 6 月までの情報を元にしています
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## ライセンス
+
+MIT License
