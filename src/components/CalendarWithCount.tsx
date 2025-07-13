@@ -17,23 +17,47 @@ const CalendarWithCount: React.FC<CalendarWithCountProps> = ({
   // カレンダーの日付ごとにTodo件数を表示
   const renderDayContents = (day: number, date?: Date) => {
     if (!date) return day;
-    const key = date.toISOString().slice(0, 10);
+    // タイムゾーンずれ防止: ローカル日付でkey生成
+    const pad = (n: number) => n.toString().padStart(2, "0");
+    const key = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
+      date.getDate()
+    )}`;
     const count = todosByDate[key]?.length || 0;
     return (
-      <Box position="relative" textAlign="center">
-        <span>{day}</span>
+      <Box
+        textAlign="center"
+        minW={7}
+        minH={7}
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        height="40px"
+        position="relative"
+      >
+        <span
+          style={{
+            lineHeight: "1",
+            fontSize: "1em",
+            marginBottom: count > 0 ? 2 : 0,
+          }}
+        >
+          {day}
+        </span>
         {count > 0 && (
-          <Badge
-            colorScheme="teal"
-            position="absolute"
-            top={-1}
-            right={-1}
-            fontSize="0.7em"
-            borderRadius="full"
-            px={2}
+          <Box
+            fontSize="xs"
+            color="teal.600"
+            fontWeight="bold"
+            borderRadius="md"
+            px={1}
+            bg="teal.50"
+            lineHeight="1"
+            mt={0.5}
+            style={{ marginTop: "2px" }}
           >
-            {count}
-          </Badge>
+            {count}件
+          </Box>
         )}
       </Box>
     );
