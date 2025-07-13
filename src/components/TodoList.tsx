@@ -2,7 +2,7 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import type { DropResult } from "@hello-pangea/dnd";
 import { useEditTodo } from "../hooks/useEditTodo";
 import TodoItem from "./TodoItem";
-import type { Todo } from "../hooks/useTodos";
+import type { Todo } from "../types/todo";
 
 export type TodoListProps = {
   todos: Todo[];

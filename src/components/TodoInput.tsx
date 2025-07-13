@@ -2,7 +2,7 @@ import { HStack, Input, Button, Box } from "@chakra-ui/react";
 import { useState } from "react";
 
 export type TodoInputProps = {
-  onAdd: (todo: string) => void;
+  onAdd: (text: string) => void;
 };
 
 export default function TodoInput({ onAdd }: TodoInputProps) {

@@ -1,7 +1,7 @@
 import { HStack, Text, IconButton, Input, Button } from "@chakra-ui/react";
 import { MdDelete, MdDragIndicator, MdEdit } from "react-icons/md";
 import type { DraggableProvided } from "@hello-pangea/dnd";
-import type { Todo } from "../hooks/useTodos";
+import type { Todo } from "../types/todo";
 import React from "react";
 
 export type TodoItemProps = {
