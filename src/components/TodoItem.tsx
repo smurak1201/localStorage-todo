@@ -31,7 +31,9 @@ const TodoItem: React.FC<TodoItemProps> = ({
   dragProvided,
   dragHandleProps,
 }) => {
+  // 個々のTodoを表示・操作するコンポーネント
   return (
+    // HStackで横並びレイアウト
     <HStack
       justify="space-between"
       bg="teal.50"
@@ -46,6 +48,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
         />
       </span>
       {editing ? (
+        // 編集モード時の表示
         <>
           <Input
             value={editValue}
@@ -64,6 +67,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
           </Button>
         </>
       ) : (
+        // 通常表示モード
         <>
           <Text flex={1}>{todo.text}</Text>
           <IconButton

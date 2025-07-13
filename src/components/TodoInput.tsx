@@ -16,15 +16,17 @@ export default function TodoInput({ onAdd }: TodoInputProps) {
 
   return (
     <Box mb={4}>
-      <HStack alignItems="center" mb={2}>
+      <HStack mb={2}>
+        {/* Todo入力欄 */}
         <Input
-          placeholder="新しいTodoを入力..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          bg="white"
+          placeholder="新しいTodoを入力..."
           size="md"
           height="40px"
+          bg="white"
         />
+        {/* 追加ボタン */}
         <Button
           colorScheme="teal"
           onClick={handleAdd}
