@@ -7,8 +7,8 @@ import {
   HStack,
   IconButton,
   Text,
-  ChakraProvider,
 } from "@chakra-ui/react";
+import { Provider } from "./components/ui/provider";
 import { MdDelete } from "react-icons/md";
 
 const LOCAL_STORAGE_KEY = "todos";
@@ -39,8 +39,7 @@ function App() {
   };
 
   return (
-    <ChakraProvider>
-      {/* propsなし */}
+    <Provider>
       <Box
         maxW="md"
         mx="auto"
@@ -86,7 +85,7 @@ function App() {
           ))}
         </VStack>
       </Box>
-    </ChakraProvider>
+    </Provider>
   );
 }
 
