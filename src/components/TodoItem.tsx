@@ -1,5 +1,8 @@
 import { HStack, Text, IconButton, Input, Button } from "@chakra-ui/react";
 import { MdDelete, MdDragIndicator, MdEdit } from "react-icons/md";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useState } from "react";
 import type { DraggableProvided } from "@hello-pangea/dnd";
 import React from "react";
 
@@ -30,6 +33,19 @@ const TodoItem: React.FC<TodoItemProps> = ({
   dragProvided,
   dragHandleProps,
 }) => {
+  // 日付選択用state（Input値が日付形式ならDate型に変換）
+  const [selectedDate, setSelectedDate] = useState<Date | null>(
+    editing && !isNaN(Date.parse(editValue)) ? new Date(editValue) : null
+  );
+
+  // DatePickerで日付選択時にInputへ反映
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
+    if (date) {
+      onEditChange(date.toISOString().slice(0, 10)); // yyyy-mm-dd形式
+    }
+  };
+
   return (
     <HStack
       justify="space-between"
@@ -53,6 +69,20 @@ const TodoItem: React.FC<TodoItemProps> = ({
             flex={1}
             mr={2}
             fontSize="md" // 16px以上でスマホズーム防止
+            placeholder="内容または日付を入力"
+          />
+          <DatePicker
+            selected={selectedDate}
+            onChange={handleDateChange}
+            dateFormat="yyyy-MM-dd"
+            placeholderText="日付選択"
+            customInput={
+              <Button size="sm" variant="outline" mr={2}>
+                📅
+              </Button>
+            }
+            popperPlacement="bottom"
+            isClearable
           />
           <Button size="sm" colorScheme="teal" mr={1} onClick={onEditSave}>
             保存

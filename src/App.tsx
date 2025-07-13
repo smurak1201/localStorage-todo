@@ -2,9 +2,18 @@ import { Box, Text } from "@chakra-ui/react";
 import TodoList from "./components/TodoList";
 import TodoInput from "./components/TodoInput";
 import { useTodos } from "./hooks/useTodos";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useState } from "react";
 
 function App() {
-  const { todos, addTodo, removeTodo, moveTodo, editTodo } = useTodos();
+  // 日付ごとにToDoを管理するuseTodos（後でhooksも修正）
+  const { todosByDate, addTodo, removeTodo, moveTodo, editTodo } = useTodos();
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+
+  // yyyy-mm-dd形式
+  const dateKey = selectedDate.toISOString().slice(0, 10);
+  const todos = todosByDate[dateKey] || [];
 
   return (
     <Box
@@ -20,12 +29,20 @@ function App() {
       <Text fontSize="2xl" fontWeight="bold" color="teal.500" mb={4}>
         Todoリスト
       </Text>
-      <TodoInput onAdd={addTodo} />
+      <Box mb={4}>
+        <DatePicker
+          selected={selectedDate}
+          onChange={(date) => date && setSelectedDate(date)}
+          dateFormat="yyyy-MM-dd"
+          inline
+        />
+      </Box>
+      <TodoInput onAdd={(todo) => addTodo(dateKey, todo)} />
       <TodoList
         todos={todos}
-        onRemove={removeTodo}
-        onMove={moveTodo}
-        onEdit={editTodo}
+        onRemove={(idx) => removeTodo(dateKey, idx)}
+        onMove={(from, to) => moveTodo(dateKey, from, to)}
+        onEdit={(idx, value) => editTodo(dateKey, idx, value)}
       />
     </Box>
   );
