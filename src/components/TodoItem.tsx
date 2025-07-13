@@ -52,6 +52,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
             size="sm"
             flex={1}
             mr={2}
+            fontSize="md" // 16px以上でスマホズーム防止
           />
           <Button size="sm" colorScheme="teal" mr={1} onClick={onEditSave}>
             保存
