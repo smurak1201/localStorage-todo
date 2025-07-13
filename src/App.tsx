@@ -2,8 +2,7 @@ import { Box, Text } from "@chakra-ui/react";
 import TodoList from "./components/TodoList";
 import TodoInput from "./components/TodoInput";
 import { useTodos } from "./hooks/useTodos";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import CalendarWithCount from "./components/CalendarWithCount";
 import { useState } from "react";
 
 function App() {
@@ -30,11 +29,10 @@ function App() {
         Todoリスト
       </Text>
       <Box mb={4}>
-        <DatePicker
+        <CalendarWithCount
           selected={selectedDate}
-          onChange={(date) => date && setSelectedDate(date)}
-          dateFormat="yyyy-MM-dd"
-          inline
+          onChange={setSelectedDate}
+          todosByDate={todosByDate}
         />
       </Box>
       <TodoInput onAdd={(todo) => addTodo(dateKey, todo)} />
