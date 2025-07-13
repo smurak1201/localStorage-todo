@@ -1,7 +1,4 @@
-import {
-  Box,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import TodoList from "./components/TodoList";
 import TodoInput from "./components/TodoInput";
 import { useTodos } from "./hooks/useTodos";
