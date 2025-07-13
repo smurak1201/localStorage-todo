@@ -1,4 +1,4 @@
-import { HStack, Input, Button } from "@chakra-ui/react";
+import { HStack, Input, Button, Box } from "@chakra-ui/react";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -20,12 +20,14 @@ export default function TodoInput({ onAdd }: TodoInputProps) {
   };
 
   return (
-    <HStack mb={4}>
+    <HStack mb={4} alignItems="center">
       <Input
         placeholder="新しいTodoを入力..."
         value={input}
         onChange={(e) => setInput(e.target.value)}
         bg="white"
+        size="md"
+        height="40px"
       />
       <DatePicker
         selected={due}
@@ -33,7 +35,13 @@ export default function TodoInput({ onAdd }: TodoInputProps) {
         dateFormat="yyyy-MM-dd"
         placeholderText="期日"
         customInput={
-          <Button size="sm" variant="outline">
+          <Button
+            size="md"
+            variant="outline"
+            height="40px"
+            minW={16}
+            colorScheme="teal"
+          >
             期日
           </Button>
         }
@@ -42,11 +50,28 @@ export default function TodoInput({ onAdd }: TodoInputProps) {
         minDate={new Date()}
       />
       {due && (
-        <span style={{ color: "#3182ce", fontSize: "0.95em", marginLeft: 4 }}>
-          選択中: {due.toISOString().slice(0, 10)}
-        </span>
+        <Box
+          bg="teal.50"
+          color="teal.600"
+          fontSize="sm"
+          px={3}
+          py={1}
+          borderRadius="md"
+          fontWeight="bold"
+          height="32px"
+          display="flex"
+          alignItems="center"
+        >
+          期日: {due.toISOString().slice(0, 10)}
+        </Box>
       )}
-      <Button colorScheme="teal" onClick={handleAdd}>
+      <Button
+        colorScheme="teal"
+        onClick={handleAdd}
+        size="md"
+        height="40px"
+        minW={16}
+      >
         追加
       </Button>
     </HStack>
