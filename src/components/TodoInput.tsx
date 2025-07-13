@@ -32,6 +32,7 @@ export default function TodoInput({ onAdd }: TodoInputProps) {
           size="md"
           height="40px"
           bg="white"
+          fontSize="16px" // スマホ拡大防止
         />
         {/* 追加ボタン */}
         <Button

@@ -64,7 +64,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
             size="sm"
             flex={1}
             mr={2}
-            fontSize="md"
+            fontSize="16px" // スマホ拡大防止
             placeholder="内容を入力"
           />
           {/* 保存ボタン */}
