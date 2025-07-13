@@ -10,7 +10,7 @@ function App() {
     <Box
       maxW="md"
       mx="auto"
-      mt={10}
+      mt={4}
       p={6}
       bg="white"
       borderRadius="lg"
