@@ -1,5 +1,5 @@
 import { HStack, Text, IconButton } from "@chakra-ui/react";
-import { MdDelete, MdDragHandle } from "react-icons/md";
+import { MdDelete, MdDragIndicator } from "react-icons/md";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import type { DropResult } from "@hello-pangea/dnd";
 
@@ -33,8 +33,8 @@ export default function TodoList({ todos, onRemove, onMove }: TodoListProps) {
                     {...dragProvided.draggableProps}
                   >
                     <span {...dragProvided.dragHandleProps}>
-                      <MdDragHandle
-                        style={{ cursor: "grab", marginRight: 8 }}
+                      <MdDragIndicator
+                        style={{ cursor: "grab", marginRight: 8, fontSize: 22 }}
                       />
                     </span>
                     <Text flex={1}>{todo}</Text>
