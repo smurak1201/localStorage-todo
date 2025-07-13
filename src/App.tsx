@@ -8,13 +8,15 @@ import {
   IconButton,
   Text,
 } from "@chakra-ui/react";
-import { Provider } from "./components/ui/provider";
 import { MdDelete } from "react-icons/md";
 
 const LOCAL_STORAGE_KEY = "todos";
 
 function App() {
-  const [todos, setTodos] = useState<string[]>([]);
+  const [todos, setTodos] = useState<string[]>(() => {
+    const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  });
   const [input, setInput] = useState("");
 
   useEffect(() => {
@@ -39,53 +41,51 @@ function App() {
   };
 
   return (
-    <Provider>
-      <Box
-        maxW="md"
-        mx="auto"
-        mt={10}
-        p={6}
-        bg="white"
-        borderRadius="lg"
-        boxShadow="md"
-      >
-        <Text fontSize="2xl" fontWeight="bold" color="teal.500" mb={4}>
-          Todoリスト
-        </Text>
-        <HStack mb={4}>
-          <Input
-            placeholder="新しいTodoを入力..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            bg="white"
-          />
-          <Button colorScheme="teal" onClick={addTodo}>
-            追加
-          </Button>
-        </HStack>
-        <VStack gap={3} align="stretch">
-          {todos.map((todo, idx) => (
-            <HStack
-              key={idx}
-              justify="space-between"
-              bg="teal.50"
-              p={2}
-              borderRadius="md"
+    <Box
+      maxW="md"
+      mx="auto"
+      mt={10}
+      p={6}
+      bg="white"
+      borderRadius="lg"
+      boxShadow="md"
+    >
+      <Text fontSize="2xl" fontWeight="bold" color="teal.500" mb={4}>
+        Todoリスト
+      </Text>
+      <HStack mb={4}>
+        <Input
+          placeholder="新しいTodoを入力..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          bg="white"
+        />
+        <Button colorScheme="teal" onClick={addTodo}>
+          追加
+        </Button>
+      </HStack>
+      <VStack gap={3} align="stretch">
+        {todos.map((todo, idx) => (
+          <HStack
+            key={idx}
+            justify="space-between"
+            bg="teal.50"
+            p={2}
+            borderRadius="md"
+          >
+            <Text>{todo}</Text>
+            <IconButton
+              aria-label="削除"
+              colorScheme="teal"
+              variant="ghost"
+              onClick={() => removeTodo(idx)}
             >
-              <Text>{todo}</Text>
-              <IconButton
-                aria-label="削除"
-                colorScheme="teal"
-                variant="ghost"
-                onClick={() => removeTodo(idx)}
-              >
-                <MdDelete />
-              </IconButton>
-            </HStack>
-          ))}
-        </VStack>
-      </Box>
-    </Provider>
+              <MdDelete />
+            </IconButton>
+          </HStack>
+        ))}
+      </VStack>
+    </Box>
   );
 }
 
