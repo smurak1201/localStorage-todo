@@ -47,6 +47,12 @@ const TodoItem: React.FC<TodoItemProps> = ({
       borderRadius="md"
       ref={dragProvided.innerRef}
       {...dragProvided.draggableProps}
+      // ドラッグ中の視覚的フィードバック
+      _hover={{ bg: "teal.100", transform: "scale(1.02)" }}
+      _active={{ bg: "teal.200", boxShadow: "0 4px 12px rgba(0,0,0,0.15)" }}
+      transition="all 0.2s ease"
+      cursor="grab"
+      _focusWithin={{ cursor: "grab" }}
     >
       {/* ドラッグハンドル（並び替え用） */}
       <span {...dragHandleProps}>
@@ -90,7 +96,13 @@ const TodoItem: React.FC<TodoItemProps> = ({
         // 通常表示モード
         <>
           {/* Todo内容表示（ドラッグ可能） */}
-          <Text flex={1} {...dragHandleProps} cursor="grab">
+          <Text
+            flex={1}
+            {...dragHandleProps}
+            cursor="grab"
+            _active={{ cursor: "grabbing" }}
+            userSelect="none"
+          >
             {todo.text}
           </Text>
           {/* 編集ボタン */}
