@@ -23,6 +23,7 @@ Chakra UI でスタイリング、localStorage でデータ永続化、ドラッ
 - **フレームワーク**: React 18
 - **ビルドツール**: Vite
 - **UI ライブラリ**: Chakra UI v3
+- **カラーモード**: next-themes（ライト/ダークモード切り替え）
 - **状態管理**: React Hooks（useState, useEffect, カスタムフック）
 - **ドラッグ&ドロップ**: @hello-pangea/dnd
 - **データ永続化**: localStorage（ブラウザ内データ保存）
@@ -119,6 +120,16 @@ components/TodoInput.tsx → components/TodoList.tsx → components/TodoItem.tsx
 - props によるデータの受け渡し
 - イベントハンドリング
 
+### **STEP 6: カラーモード機能を理解**
+
+```
+components/ui/provider.tsx → components/ui/color-mode.tsx
+```
+
+- next-themes によるテーマ管理
+- useColorModeValue による動的スタイリング
+- ライト/ダークモード切り替えの実装
+
 ---
 
 ## このアプリで学べる React の重要概念
@@ -153,6 +164,12 @@ App（状態更新）
 - IDE での自動補完・リファクタリング支援
 - 保守性の向上
 
+### **5. カラーモードとテーマ管理**
+
+- **next-themes**: テーマの永続化と管理
+- **useColorModeValue**: カラーモードに応じた動的スタイリング
+- **プロバイダーパターン**: アプリ全体へのテーマ機能提供
+
 ---
 
 ## 実装されている機能
@@ -162,6 +179,7 @@ App（状態更新）
 - localStorage によるデータ永続化
 - Enter キーによる追加・保存
 - Escape キーによる編集キャンセル
+- ライト/ダークモード切り替え機能
 - レスポンシブデザイン（スマホ対応）
 
 ---
@@ -232,31 +250,6 @@ npm run type-check
 
 ---
 
-## カスタマイズ・拡張のアイデア
-
-### **初級者向け**
-
-- [ ] Todo にカテゴリ機能を追加
-- [ ] 完了・未完了の切り替え機能
-- [ ] Todo の優先度設定
-- [ ] ダークモード対応
-
-### **中級者向け**
-
-- [ ] 検索・フィルター機能
-- [ ] Todo の期限設定・通知
-- [ ] データのインポート・エクスポート
-- [ ] マルチユーザー対応（ログイン機能）
-
-### **上級者向け**
-
-- [ ] バックエンド API との連携
-- [ ] リアルタイム同期（WebSocket）
-- [ ] PWA（プログレッシブ Web アプリ）対応
-- [ ] 単体テスト・E2E テストの追加
-
----
-
 ## 参考資料・学習リソース
 
 ### **公式ドキュメント**
@@ -265,6 +258,7 @@ npm run type-check
 - [TypeScript ハンドブック](https://www.typescriptlang.org/docs/)
 - [Chakra UI ドキュメント](https://v2.chakra-ui.com/)
 - [Vite ガイド](https://ja.vitejs.dev/guide/)
+- [next-themes ドキュメント](https://github.com/pacocoursey/next-themes)
 
 ### **学習サイト・書籍**
 
@@ -303,4 +297,5 @@ MIT License - 詳細は [LICENSE](LICENSE) ファイルをご確認ください�
 - TypeScript チーム
 - Chakra UI コミュニティ
 - Vite 開発チーム
+- next-themes 開発者
 - GitHub Copilot
