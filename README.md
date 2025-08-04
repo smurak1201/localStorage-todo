@@ -1,4 +1,4 @@
-# localstrage-todo
+# localStorage-todo
 
 ## 概要
 
@@ -178,7 +178,7 @@ App（状態更新）
 ```bash
 # 1. リポジトリをクローン
 git clone <repository-url>
-cd localstrage-todo
+cd localStorage-todo
 
 # 2. 依存パッケージをインストール
 npm install
