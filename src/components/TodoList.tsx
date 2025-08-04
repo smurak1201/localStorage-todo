@@ -51,7 +51,7 @@ export default function TodoList({
         {(provided) => (
           <Stack ref={provided.innerRef} {...provided.droppableProps} gap={3}>
             {todos.map((todo, idx) => (
-              <Draggable key={idx} draggableId={`todo-${idx}`} index={idx}>
+              <Draggable key={todo.id} draggableId={todo.id} index={idx}>
                 {(dragProvided) => (
                   <TodoItem
                     todo={todo}

@@ -21,7 +21,11 @@ export function useTodos() {
 
   // 新しいTodoを追加
   const addTodo = (text: string) => {
-    setTodos([...todos, { text }]);
+    const newTodo: Todo = {
+      id: `todo-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      text,
+    };
+    setTodos([...todos, newTodo]);
   };
 
   // Todoを削除

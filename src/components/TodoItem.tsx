@@ -50,7 +50,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
       // ドラッグ中の視覚的フィードバック
       _hover={{ bg: "teal.100", transform: "scale(1.02)" }}
       _active={{ bg: "teal.200", boxShadow: "0 4px 12px rgba(0,0,0,0.15)" }}
-      transition="all 0.2s ease"
+      transition="background-color 0.2s ease, box-shadow 0.2s ease"
       cursor="grab"
       _focusWithin={{ cursor: "grab" }}
     >
