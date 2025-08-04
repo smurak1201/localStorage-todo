@@ -15,7 +15,13 @@
 // Chakra UIからレイアウト用のBoxとテキスト用のTextをインポート
 // Box: div要素のようなコンテナ（レイアウト・スタイリング用）
 // Text: 文字表示専用のコンポーネント
-import { Box, Text } from "@chakra-ui/react";
+// HStack: 横並びレイアウト用コンテナ
+import { Box, Text, HStack } from "@chakra-ui/react";
+
+// カラーモード切り替えボタンをインポート
+// ColorModeButton: ライト/ダークモード切り替え用ボタン
+// useColorModeValue: カラーモードに応じた値選択フック
+import { ColorModeButton, useColorModeValue } from "./components/ui/color-mode";
 
 // 子コンポーネントをインポート
 // TodoList: Todo一覧の表示・編集・削除・並び替えを担当
@@ -44,6 +50,12 @@ function App() {
   // editTodo: Todoの内容を編集する関数
   const { todos, addTodo, removeTodo, moveTodo, editTodo } = useTodos();
 
+  // カラーモードに応じた背景色を設定
+  // ライトモード: 白背景、ダークモード: グレー背景
+  const bgColor = useColorModeValue("white", "gray.800");
+  // カラーモードに応じたテキスト色を設定
+  const textColor = useColorModeValue("gray.800", "white");
+
   return (
     // Boxコンポーネントで全体のレイアウトコンテナを作成
     // ※Boxは<div>のようなもので、Chakra UIのスタイリング機能が使える
@@ -52,18 +64,32 @@ function App() {
       mx="auto" // 左右を自動マージンで中央寄せ
       mt={4} // 上部に余白を追加（4 = 1rem）
       p={6} // 内側全体に余白を追加（6 = 1.5rem）
-      bg="white" // 背景色を白に設定
+      bg={bgColor} // カラーモードに応じた背景色
+      color={textColor} // カラーモードに応じたテキスト色
       borderRadius="lg" // 角を丸くして見た目を良くする
       boxShadow="none" // 影なし（シンプルなデザイン）
       border="none" // 枠線なし
+      transition="background-color 0.3s ease, color 0.3s ease" // スムーズな色変更
     >
       {/*
-        アプリのタイトル表示
-        ※Textコンポーネントは文字表示専用で、フォントサイズや色を簡単に指定できる
+        アプリのヘッダー部分
+        ※HStackで横並びにして、タイトルとカラーモード切り替えボタンを配置
       */}
-      <Text fontSize="2xl" fontWeight="bold" color="teal.500" mb={4}>
-        Todoリスト
-      </Text>
+      <HStack justify="space-between" align="center" mb={4}>
+        {/*
+          アプリのタイトル表示
+          ※Textコンポーネントは文字表示専用で、フォントサイズや色を簡単に指定できる
+        */}
+        <Text fontSize="2xl" fontWeight="bold" color="teal.500">
+          Todoリスト
+        </Text>
+
+        {/*
+          カラーモード切り替えボタン
+          ※ライトモード/ダークモードの切り替えが可能
+        */}
+        <ColorModeButton />
+      </HStack>
 
       {/*
         Todo追加用フォーム

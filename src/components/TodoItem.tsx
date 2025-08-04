@@ -35,6 +35,10 @@ import type { DraggableProvided } from "@hello-pangea/dnd";
 // Todo: Todoアイテムのデータ構造を定義した型
 import type { Todo } from "../types/todo";
 
+// カラーモード対応フックをインポート
+// useColorModeValue: カラーモードに応じた値選択フック
+import { useColorModeValue } from "./ui/color-mode";
+
 // Reactの型定義をインポート
 // React: JSX要素の型定義に必要
 import React from "react";
@@ -93,19 +97,23 @@ const TodoItem: React.FC<TodoItemProps> = ({
   dragProvided,
   dragHandleProps,
 }) => {
+  // カラーモードに応じた背景色を設定
+  const itemBg = useColorModeValue("teal.50", "gray.700");
+  const itemHoverBg = useColorModeValue("teal.100", "gray.600");
+  const itemActiveBg = useColorModeValue("teal.200", "gray.500");
   return (
     // HStackで横並びレイアウトを構築
     // ※justify="space-between"で左端と右端に要素を配置
     <HStack
       justify="space-between" // 要素を両端に配置
-      bg="teal.50" // 薄い青緑色の背景
+      bg={itemBg} // カラーモードに応じた背景色
       p={2} // 内側の余白
       borderRadius="md" // 中程度の角丸
       ref={dragProvided.innerRef} // ドラッグ&ドロップライブラリが要求するref
       {...dragProvided.draggableProps} // ドラッグ&ドロップに必要な属性を展開
       // 視覚的フィードバック（ユーザビリティ向上）
-      _hover={{ bg: "teal.100", transform: "scale(1.02)" }} // マウスホバー時のスタイル
-      _active={{ bg: "teal.200", boxShadow: "0 4px 12px rgba(0,0,0,0.15)" }} // クリック時のスタイル
+      _hover={{ bg: itemHoverBg, transform: "scale(1.02)" }} // マウスホバー時のスタイル
+      _active={{ bg: itemActiveBg, boxShadow: "0 4px 12px rgba(0,0,0,0.15)" }} // クリック時のスタイル
       transition="background-color 0.2s ease, box-shadow 0.2s ease" // スムーズなアニメーション
       cursor="grab" // 掴めることを示すカーソル
       _focusWithin={{ cursor: "grab" }} // フォーカス内でもgrabカーソル

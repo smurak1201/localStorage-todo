@@ -19,6 +19,10 @@
 // Box: レイアウト調整用のコンテナ
 import { HStack, Input, Button, Box } from "@chakra-ui/react";
 
+// カラーモード対応フックをインポート
+// useColorModeValue: カラーモードに応じた値選択フック
+import { useColorModeValue } from "./ui/color-mode";
+
 // Reactの状態管理フックをインポート
 // useState: コンポーネント内でデータの状態（値の変化）を管理する機能
 import { useState } from "react";
@@ -51,6 +55,9 @@ export default function TodoInput({ onAdd }: TodoInputProps) {
   // input: 現在の入力内容（文字列）
   // setInput: 入力内容を更新する関数
   const [input, setInput] = useState("");
+
+  // カラーモードに応じた入力欄の背景色を設定
+  const inputBg = useColorModeValue("white", "gray.700");
 
   // 追加ボタン押下時・Enterキー押下時の共通処理
   const handleAdd = () => {
@@ -94,7 +101,7 @@ export default function TodoInput({ onAdd }: TodoInputProps) {
           placeholder="新しいTodoを入力..." // 入力ヒント表示
           size="md" // 中サイズの入力欄
           height="40px" // 高さを明示的に指定
-          bg="white" // 背景色を白に設定
+          bg={inputBg} // カラーモードに応じた背景色
           fontSize="16px" // スマホでのズーム防止（16px以上でズームされない）
         />
 
