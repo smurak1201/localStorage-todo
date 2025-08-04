@@ -1,5 +1,6 @@
 // ドラッグ＆ドロップ用ライブラリ
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { Stack } from "@chakra-ui/react";
 import type { DropResult } from "@hello-pangea/dnd";
 // 編集状態管理用カスタムフック
 import { useEditTodo } from "../hooks/useEditTodo";
@@ -48,9 +49,7 @@ export default function TodoList({
     <DragDropContext onDragEnd={handleDragEnd}>
       <Droppable droppableId="todo-list">
         {(provided) => (
-          <div ref={provided.innerRef} {...provided.droppableProps}>
-            {/* Todo一覧を表示 */}
-            {/* Todo一覧を表示 */}
+          <Stack ref={provided.innerRef} {...provided.droppableProps} gap={3}>
             {todos.map((todo, idx) => (
               <Draggable key={idx} draggableId={`todo-${idx}`} index={idx}>
                 {(dragProvided) => (
@@ -71,7 +70,7 @@ export default function TodoList({
               </Draggable>
             ))}
             {provided.placeholder}
-          </div>
+          </Stack>
         )}
       </Droppable>
     </DragDropContext>

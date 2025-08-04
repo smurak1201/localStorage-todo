@@ -89,8 +89,10 @@ const TodoItem: React.FC<TodoItemProps> = ({
       ) : (
         // 通常表示モード
         <>
-          {/* Todo内容表示 */}
-          <Text flex={1}>{todo.text}</Text>
+          {/* Todo内容表示（ドラッグ可能） */}
+          <Text flex={1} {...dragHandleProps} cursor="grab">
+            {todo.text}
+          </Text>
           {/* 編集ボタン */}
           <IconButton
             aria-label="編集"
