@@ -6,4 +6,19 @@ export default defineConfig({
   plugins: [react()],
   // 公開URLのルートパスを指定（サブディレクトリ配信の場合は '/localstrage-todo/'）
   base: '/localstrage-todo/',
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom'],
+          chakra: [
+            '@chakra-ui/react',
+            '@emotion/react',
+            '@emotion/styled',
+            'framer-motion'
+          ],
+        },
+      },
+    },
+  },
 })
