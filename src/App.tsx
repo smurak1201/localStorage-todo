@@ -30,13 +30,15 @@ function App() {
       </Text>
       {/* Todo追加フォーム。onAddで新規Todoを追加 */}
       <TodoInput onAdd={addTodo} />
-      {/* Todo一覧表示。各操作関数をpropsで渡す */}
-      <TodoList
-        todos={todos}
-        onRemove={removeTodo}
-        onMove={moveTodo}
-        onEdit={editTodo}
-      />
+      {/* Todo一覧表示。各操作関数をpropsで渡す。リスト上部にスペースを追加 */}
+      <Box mt={4}>
+        <TodoList
+          todos={todos}
+          onRemove={removeTodo}
+          onMove={moveTodo}
+          onEdit={editTodo}
+        />
+      </Box>
     </Box>
   );
 }
