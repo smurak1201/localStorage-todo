@@ -67,6 +67,17 @@ const TodoItem: React.FC<TodoItemProps> = ({
           <Input
             value={editValue}
             onChange={(e) => onEditChange(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                if (editValue.trim() !== "") {
+                  onEditSave();
+                }
+              } else if (e.key === "Escape") {
+                e.preventDefault();
+                onEditCancel();
+              }
+            }}
             size="sm"
             flex={1}
             mr={2}
