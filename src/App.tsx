@@ -51,10 +51,14 @@ function App() {
   const { todos, addTodo, removeTodo, moveTodo, editTodo } = useTodos();
 
   // カラーモードに応じた背景色を設定
-  // ライトモード: 白背景、ダークモード: グレー背景
-  const bgColor = useColorModeValue("white", "gray.800");
+  // ライトモード: 薄いグレー背景、ダークモード: ダークグレー背景
+  const bgColor = useColorModeValue("gray.50", "gray.800");
   // カラーモードに応じたテキスト色を設定
   const textColor = useColorModeValue("gray.800", "white");
+  // カラーモードに応じた枠線色を設定
+  const borderColor = useColorModeValue("gray.200", "gray.600");
+  // カラーモードに応じたボックスシャドウを設定
+  const boxShadow = useColorModeValue("sm", "md");
 
   return (
     // Boxコンポーネントで全体のレイアウトコンテナを作成
@@ -67,9 +71,10 @@ function App() {
       bg={bgColor} // カラーモードに応じた背景色
       color={textColor} // カラーモードに応じたテキスト色
       borderRadius="lg" // 角を丸くして見た目を良くする
-      boxShadow="none" // 影なし（シンプルなデザイン）
-      border="none" // 枠線なし
-      transition="background-color 0.3s ease, color 0.3s ease" // スムーズな色変更
+      boxShadow={boxShadow} // カラーモードに応じたボックスシャドウ
+      border="1px solid" // 薄い枠線を追加
+      borderColor={borderColor} // カラーモードに応じた枠線色
+      transition="all 0.3s ease" // スムーズな色変更（枠線・シャドウも含む）
     >
       {/*
         アプリのヘッダー部分
