@@ -19,6 +19,14 @@ export default function TodoInput({ onAdd }: TodoInputProps) {
     setInput(""); // 入力欄をクリア
   };
 
+  // Enterキー押下時の処理
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // フォームのデフォルト送信を防ぐ
+      handleAdd(); // Todo追加処理を実行
+    }
+  };
+
   return (
     // Boxで全体の余白を調整
     <Box mb={4}>
@@ -28,6 +36,7 @@ export default function TodoInput({ onAdd }: TodoInputProps) {
         <Input
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="新しいTodoを入力..."
           size="md"
           height="40px"
