@@ -18,8 +18,16 @@
 // Text: 文字表示専用コンポーネント
 // IconButton: アイコン付きボタン
 // Input: テキスト入力欄
+// Textarea: 複数行テキスト入力欄
 // Button: 通常のボタン
-import { HStack, Text, IconButton, Input, Button } from "@chakra-ui/react";
+import {
+  HStack,
+  Text,
+  IconButton,
+  Input,
+  Textarea,
+  Button,
+} from "@chakra-ui/react";
 
 // Material Designアイコンライブラリからインポート
 // MdDelete: 削除アイコン（ゴミ箱）
@@ -136,27 +144,64 @@ const TodoItem: React.FC<TodoItemProps> = ({
             編集用入力欄
             ※制御されたコンポーネントとして実装（valueとonChangeをセット）
             ※キーボードショートカット（Enter/Escape）をサポート
+            ※テキストの長さに応じて入力欄のサイズを動的調整
+            ※長文の場合はTextareaを使用して複数行編集を可能にする
           */}
-          <Input
-            value={editValue} // 現在の編集内容を表示
-            onChange={(e) => onEditChange(e.target.value)} // 入力内容変更時の処理
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault(); // デフォルト動作を防ぐ
-                if (editValue.trim() !== "") {
-                  onEditSave(); // Enterキーで保存
+          {editValue.length > 50 || editValue.includes("\n") ? (
+            // 長文または改行がある場合はTextareaを使用
+            <Textarea
+              value={editValue} // 現在の編集内容を表示
+              onChange={(e) => onEditChange(e.target.value)} // 入力内容変更時の処理
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+                  e.preventDefault(); // デフォルト動作を防ぐ
+                  if (editValue.trim() !== "") {
+                    onEditSave(); // Ctrl+Enterで保存
+                  }
+                } else if (e.key === "Escape") {
+                  e.preventDefault();
+                  onEditCancel(); // Escapeキーでキャンセル
                 }
-              } else if (e.key === "Escape") {
-                e.preventDefault();
-                onEditCancel(); // Escapeキーでキャンセル
-              }
-            }}
-            size="sm" // 小サイズの入力欄
-            flex={1} // 残り幅を最大限使用
-            mr={2} // 右側にマージン
-            fontSize="16px" // スマホでのズーム防止
-            placeholder="内容を入力" // 入力ヒント
-          />
+              }}
+              size="sm" // 小サイズ
+              flex={1} // 残り幅を最大限使用
+              mr={2} // 右側にマージン
+              fontSize="16px" // スマホでのズーム防止
+              placeholder="内容を入力（Ctrl+Enterで保存）" // 入力ヒント
+              minHeight="60px" // 最小高さを確保
+              resize="vertical" // 縦方向のリサイズを許可
+            />
+          ) : (
+            // 短文の場合は通常のInputを使用
+            <Input
+              value={editValue} // 現在の編集内容を表示
+              onChange={(e) => onEditChange(e.target.value)} // 入力内容変更時の処理
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault(); // デフォルト動作を防ぐ
+                  if (editValue.trim() !== "") {
+                    onEditSave(); // Enterキーで保存
+                  }
+                } else if (e.key === "Escape") {
+                  e.preventDefault();
+                  onEditCancel(); // Escapeキーでキャンセル
+                }
+              }}
+              size={
+                editValue.length > 30
+                  ? "md"
+                  : editValue.length > 15
+                  ? "sm"
+                  : "xs"
+              } // テキスト長に応じてサイズ調整
+              flex={1} // 残り幅を最大限使用
+              mr={2} // 右側にマージン
+              fontSize="16px" // スマホでのズーム防止
+              placeholder="内容を入力" // 入力ヒント
+              minHeight="40px" // 最小高さを確保
+              height="auto" // 高さを自動調整
+            />
+          )}
 
           {/* 保存ボタン */}
           <Button
@@ -185,6 +230,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
           {/*
             Todo内容表示（ドラッグ可能）
             ※テキスト部分もドラッグハンドルとして機能
+            ※長文の場合は複数行で表示
           */}
           <Text
             flex={1} // 残り幅を最大限使用
@@ -192,6 +238,10 @@ const TodoItem: React.FC<TodoItemProps> = ({
             cursor="grab" // 掴めることを示すカーソル
             _active={{ cursor: "grabbing" }} // ドラッグ中のカーソル
             userSelect="none" // テキスト選択を無効化（ドラッグ操作の邪魔を防ぐ）
+            whiteSpace="pre-wrap" // 改行を保持して表示
+            wordBreak="break-word" // 長い単語は折り返し
+            fontSize={todo.text.length > 50 ? "md" : "lg"} // 長文の場合は文字サイズを調整
+            lineHeight="1.4" // 行間を調整
           >
             {todo.text}
           </Text>
